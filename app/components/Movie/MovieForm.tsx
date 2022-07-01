@@ -2,7 +2,7 @@ import type { Movie } from "@prisma/client";
 
 import { Form, Link } from "@remix-run/react";
 import { Genre } from "~/lib/base";
-import SelectList from "../SelectList";
+import SelectList from "../Shared/EnumSelectList";
 
 type MovieFormProps = {
   edit?: boolean 
@@ -55,7 +55,7 @@ export default function MovieForm({edit, movie, errors, cancelUrl} : MovieFormPr
             
             <div className="col-3">
               <label htmlFor="Genre" className="form-label">Genre</label>
-              <SelectList type={typeof(Genre)} name="Genre" defaultValue={movie?.Genre} className="form-control"/>            
+              <SelectList enumeration={Genre} name="Genre" defaultValue={movie?.Genre} className="form-control"/>            
               <div className="text-danger">{errors?.Genre}</div>             
             </div>
         </div>
