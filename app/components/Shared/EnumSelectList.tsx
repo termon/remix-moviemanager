@@ -1,13 +1,13 @@
 
-type PropType = {
+// type of enumeration to use when creating select options
+type EnumType = {
   enumeration: any
-  name: string,
-  defaultValue: any,
-  className: string
 }
-export default function EnumSelectList( {enumeration, name, defaultValue, className}: PropType) {
+
+export default function EnumSelectList( {enumeration, ...props}: EnumType & React.HTMLProps<HTMLSelectElement>) { 
+  
   return ( 
-    <select name={name} defaultValue={defaultValue} className={className} >
+    <select {...props} >   
       <option value="-1" disabled>Choose a Genre...</option>
       {Object.keys(enumeration)
         .filter( f => !isNaN(Number(f)))
