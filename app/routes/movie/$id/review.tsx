@@ -5,15 +5,14 @@ import { useActionData, useLoaderData } from "@remix-run/react";
 
 import { getMovieWithReviews } from "~/lib/db.server";
 import type { ActionData } from "~/lib/base";
-import { MovieActions } from "~/lib/movie.actions";
+import { createReviewAction } from "~/lib/movie.actions";
 import ReviewForm from "~/components/Movie/ReviewForm";
 
 
 // executed on POST
 export let action: ActionFunction = async({params, request}) => {
   const {id} = params
-  const actions = new MovieActions()
-  const resp = await actions.createReview(Number(id), request)
+  const resp = await createReviewAction(Number(id), request)
   if (resp.data) {
     return redirect(`/movie/${id}/view`)
   }

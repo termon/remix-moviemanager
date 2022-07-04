@@ -102,9 +102,9 @@ const updateMovieRating = async (movie: MovieWithReviews): Promise<MovieWithRevi
     const prisma = new PrismaClient()
     try {
         await prisma.movie.update( {
-            where: { Id: movie.Id },
+            where: { Id: movie?.Id },
             data: {
-                Rating: movie.Reviews.length > 0 ? movie.Reviews.reduce( (t:number,r:Movie) => t + r.Rating, 0) / movie.Reviews.length : 0
+                Rating: movie.Reviews.length > 0 ? movie.Reviews.reduce( (t:number,r:Review) => t + r.Rating, 0) / movie.Reviews.length : 0
             }
         })
     } catch (e) {
@@ -127,7 +127,7 @@ export const addReview = async (data:Review): Promise<Review|null> => {
 
         // update movie rating
         const movie = await getMovieWithReviews(data.MovieId);
-        updateMovieRating(movie)
+        if (movie) updateMovieRating(movie)
 
         return review;
     } catch (e) {
@@ -162,7 +162,7 @@ export const deleteReview = async (movieId:number, reviewId:number): Promise<Rev
         
         // update movie rating
         const movie = await getMovieWithReviews(movieId);
-        updateMovieRating(movie)
+        if (movie) updateMovieRating(movie)
 
         console.log("db.DeleteReview: ", deleted)
         return deleted 

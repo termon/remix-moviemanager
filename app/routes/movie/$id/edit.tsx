@@ -5,14 +5,13 @@ import { useActionData, useLoaderData} from "@remix-run/react";
 
 import MovieForm from "~/components/Movie/MovieForm";
 import { getMovie } from "~/lib/db.server";
-import {  MovieActions } from "~/lib/movie.actions";
+import { editMovieAction } from "~/lib/movie.actions";
 import type { ActionData } from "~/lib/base";
-
 
 export let action: ActionFunction = async({params, request}) => {
   const {id} = params
-  const actions = new MovieActions()
-  const resp = await actions.edit(Number(id), request)
+
+  const resp = await editMovieAction(Number(id), request)
   if (resp.data) {
     return redirect(`/movie/${resp.data.Id}/view`)
   }

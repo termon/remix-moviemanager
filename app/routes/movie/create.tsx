@@ -4,12 +4,11 @@ import { redirect} from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
 import MovieForm from "~/components/Movie/MovieForm";
 import type { ActionData } from "~/lib/base";
-import { MovieActions } from "~/lib/movie.actions";
+import { createMovieAction } from "~/lib/movie.actions";
 
 // executed on post
 export let action: ActionFunction = async({request}) => {
-  const actions = new MovieActions()
-  const resp = await actions.create(request)
+  const resp = await createMovieAction(request)
   if (resp.data) {
     return redirect(`/movie/${resp.data.Id}/view`)
   }
