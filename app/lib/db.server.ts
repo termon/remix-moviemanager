@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import type { Movie, Review, User } from ".prisma/client";
-import type { MovieWithReviews } from '@/types';
+import type { MovieNoId, MovieWithReviews, ReviewNoId } from '@/types';
 
 
 // -------------------------- Movie Management --------------------------
@@ -62,7 +62,7 @@ export const deleteMovie = async (id:number): Promise<Movie|null> => {
     return null
 }
 
-export const addMovie = async (data:Movie): Promise<Movie|null> => {
+export const addMovie = async (data:MovieNoId): Promise<Movie|null> => {
     const prisma = new PrismaClient()
     try {
         const movie = await prisma.movie.create( {
@@ -116,7 +116,7 @@ const updateMovieRating = async (movie: MovieWithReviews): Promise<MovieWithRevi
     return movie;
 }
 
-export const addReview = async (data:Review): Promise<Review|null> => {
+export const addReview = async (data:ReviewNoId): Promise<Review|null> => {
     const prisma = new PrismaClient()
     try {
 
