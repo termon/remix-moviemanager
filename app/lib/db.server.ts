@@ -153,6 +153,21 @@ export const getReview = async (id:number): Promise<Review|null> => {
     return null
 }
 
+export const getReviewsForMovie = async (id:number): Promise<Review[]> => {
+    const prisma = new PrismaClient()
+    try {
+        const data = await prisma.review.findMany( {
+            where: { MovieId: id }
+        }) 
+        return data
+    } catch (e) {
+        console.error("db.GetReviewsForMovie Error:", e)
+    } finally {
+        await prisma.$disconnect()
+    }
+    return []
+}
+
 export const deleteReview = async (movieId:number, reviewId:number): Promise<Review|null> => {
     const prisma = new PrismaClient()
     try {
